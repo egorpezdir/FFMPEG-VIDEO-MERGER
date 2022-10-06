@@ -9,8 +9,7 @@ echo[
 echo[
 echo[
 echo WELCOME TO THE VIDEO MERGER!
-echo I hope that you have ffmpeg installed...
-::echo MAKE SURE THAT ALL YOUR VIDEOS HAVE THE SAME PARAMETERS (FPS, size, codecs,...)                                                                                                                                            
+echo I hope that you have ffmpeg installed...                                                                                                                                      
 echo[
 echo[
 echo[
