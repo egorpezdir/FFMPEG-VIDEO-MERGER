@@ -1,5 +1,5 @@
-setlocal enabledelayedexpansion
 @echo off
+setlocal enabledelayedexpansion
 echo[
 echo[
 echo[
@@ -10,42 +10,69 @@ echo[
 echo[
 echo WELCOME TO THE VIDEO MERGER!
 echo I hope that you have ffmpeg installed...
-echo MAKE SURE THAT ALL YOUR VIDEOS HAVE THE SAME PARAMETERS (FPS, size, codecs,...)                                                                                                                                            
+::echo MAKE SURE THAT ALL YOUR VIDEOS HAVE THE SAME PARAMETERS (FPS, size, codecs,...)                                                                                                                                            
 echo[
 echo[
 echo[
 echo HOW MANY VIDEOS WOULD YOU LIKE TO MERGE? (type an integer)
 echo[
 set /p st=
-set /a stminus1=%st%-1
 echo[
-echo DRAG AND DROP ONE VIDEO AND HIT ENTER... and continue in your desired order... 
+echo DRAG AND DROP ONE VIDEO AND HIT ENTER... and continue in your desired order...
+echo MAKE SURE THAT THERE ARE NO SPACES IN THE FILENAMES
 echo[
 
 set /p name1=
-echo file %name1% >> "videos.txt"
-set v=1
+echo file '%name1%' >> "videos.txt"
+set stored_name1=!name1!
+
  
-for /l %%v in (1, 1, %stminus1%) do (
+for /l %%v in (2, 1, %st%) do (
 	set /p name= 
-	echo file !name! >> videos.txt
+	echo file '!name!' >> videos.txt
+    set stored_name%%v=!name!
 	
 )
-:: replace " with ' in videos.txt (cringe)
 
-    set "textfile=videos.txt"
-    set "tempfile=video-temp.txt"
-    (for /f "delims=" %%i in (%textfile%) do (
-        set "line=%%i"
-        setlocal enabledelayedexpansion
-        set "line=!line:"='!"
-        echo(!line!
-        endlocal
-    ))>"%tempfile%"
-    del %textfile%
-    rename %tempfile%  %textfile%
+echo[
+echo Do all your files have the same atributes (size, fps...) [Y/N]?
+set /p question=
+if %question%==y (goto ffmpeg) else (goto convert)
 
-
+:ffmpeg
 ffmpeg -f concat -safe 0 -i videos.txt -c copy output.mp4
+exit
+
+:convert
+echo Since they do not, we need to reencode them. Input your desired settings:
+echo[
+set /p w=Width? (input a number divasible with 2)  
+echo[
+set /p h=Height? (input a number divasible with 2)   
+echo[
+set /p FPS=FPS? (missing frames will be duplicated)  
+echo[
+
+for /l %%k in (1, 1, %st%) do (
+	echo file 'converted%%k.mp4' >> "videos_converted.txt"
+	ffmpeg -i !stored_name%%k! -vf scale=%w%:%h% -r %FPS% converted%%k.mp4
+
+	
+)
+
+ffmpeg -f concat -safe 0 -i videos_converted.txt -c copy output_merged.mp4
+
+	
+	
+
+
+
 
 del /Q videos.txt
+del /Q videos_converted.txt
+del /Q converted*.mp4
+echo[
+echo DONE!
+echo[
+
+pause
