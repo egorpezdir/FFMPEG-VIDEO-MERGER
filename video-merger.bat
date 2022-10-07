@@ -66,6 +66,7 @@ goto done
 	
 
 :done
+pause
 del /Q videos.txt
 del /Q videos_converted.txt
 del /Q converted*.mp4
@@ -73,5 +74,5 @@ echo[
 echo DONE!
 echo[
 
-pause
+
 video-merger.bat
