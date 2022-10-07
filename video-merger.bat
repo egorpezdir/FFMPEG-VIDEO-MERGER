@@ -40,7 +40,7 @@ if %question%==y (goto ffmpeg) else (goto convert)
 
 :ffmpeg
 ffmpeg -f concat -safe 0 -i videos.txt -c copy output.mp4
-exit
+goto done
 
 :convert
 echo Since they do not, we need to reencode them. Input your desired settings:
@@ -61,12 +61,11 @@ for /l %%k in (1, 1, %st%) do (
 
 ffmpeg -f concat -safe 0 -i videos_converted.txt -c copy output_merged.mp4
 
+goto done
 	
 	
 
-
-
-
+:done
 del /Q videos.txt
 del /Q videos_converted.txt
 del /Q converted*.mp4
