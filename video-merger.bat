@@ -74,3 +74,4 @@ echo DONE!
 echo[
 
 pause
+video-merger.bat
