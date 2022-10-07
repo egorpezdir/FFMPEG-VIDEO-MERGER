@@ -39,7 +39,7 @@ set /p question=
 if %question%==y (goto ffmpeg) else (goto convert)
 
 :ffmpeg
-ffmpeg -f concat -safe 0 -i videos.txt -c copy output.mp4
+ffmpeg -f concat -safe 0 -i videos.txt -c copy output_merged.mp4
 goto done
 
 :convert
