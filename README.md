@@ -9,5 +9,5 @@ Just clone or download and extract the repo, run `video-merger.bat` and follow t
 
 
 
-TODO:
+TO-DO:
 - ✅allow users to merge videos with different parameters
