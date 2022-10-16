@@ -1,5 +1,5 @@
 # FFMPEG VIDEO MERGER
- Simple FFMPEG based video merger/joiner.
+ Simple FFMPEG based video merger/joiner for Windows.
 
 
 REQUIREMENTS:
